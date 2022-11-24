@@ -10,7 +10,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan
 /*Clase que inicia la aplicación Spring*/
 public class TiComoGp4Application {
-	//Main SONAR
+	//Main SONAR.
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(TiComoGp4Application.class, args);
 		
