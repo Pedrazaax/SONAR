@@ -138,7 +138,7 @@ public class RiderService {
 	}
 	
 	/* Método en el que el rider cambia el estado de un pedido */
-    public void cambiarEstadoPedido(PedidoComanda comanda) throws MalEstadoPedidoException {
+    public PedidoComanda cambiarEstadoPedido(PedidoComanda comanda) throws MalEstadoPedidoException {
     	
     	Optional<Rider> r = riderRepo.findById(comanda.getIdRider());
     	
@@ -154,7 +154,7 @@ public class RiderService {
     	
     	comanda.setEstadoPedido("EnReparto");
     	
-    	pedidosRepo.save(comanda);
+    	return pedidosRepo.save(comanda);
     	
     	
     	

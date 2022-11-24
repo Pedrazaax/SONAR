@@ -249,7 +249,7 @@ public class UsuarioService {
 		return restaurantServ.consultarPedidoPorId(idPedido);
 	}
 	/* Método en el que el usuario cambia el estado de un pedido */
-    public void cambiarEstadoPedido(PedidoComanda comanda) throws UnexistentUser, MalEstadoPedidoException {
+    public PedidoComanda cambiarEstadoPedido(PedidoComanda comanda) throws UnexistentUser, MalEstadoPedidoException {
     	Optional<PedidoComanda> pedido = pedidosRepo.findById(comanda.getId());
         Optional<Rider> r= riderServ.findById(comanda.getIdRider());
         if(!pedido.isPresent())
@@ -260,7 +260,7 @@ public class UsuarioService {
         r.get().setNumeroPedidos(r.get().getNumeroPedidos()+1);
         riderRepo.save(r.get());
         pedido.get().setEstadoPedido("Entregado");
-        pedidosRepo.save(pedido.get());
+        return pedidosRepo.save(pedido.get());
         }
 /*
      * Método que llama al repositorio de pedidos para encontrar los pedidos pendientes de un cliente
