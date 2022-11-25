@@ -86,7 +86,7 @@ class TiComoGp4ApplicationTestsSPRINT2 {
 	 */
 	@Test
 	void valorarRider() throws UnexistentUser {
-		valoracion = new Valoracion(4, "FALSO", "05985017A");
+		valoracion = new Valoracion(4, "FALSO", "12345674J");
 		valoracionG = usuarioService.valorarRider(valoracion);
 		assertEquals(valoracion, valoracionG);
 	}
@@ -98,15 +98,15 @@ class TiComoGp4ApplicationTestsSPRINT2 {
 	/**
 	 * REALIZACIÓN DE PEDIDO CORRECTO
 	 */
-//	@Test
-//	void realizarPedidoCorrecto() throws IlegalNumberException {
-//		comanda = new HashMap<String, String>();
-//		comanda.put("nifCliente", "151551");
-//		comanda.put("idRestaurante", "151551");
-//		pedidoComandaG = usuarioService.realizarPedido(comanda);
-//		assertNotNull(pedidoComanda);
-//		
-//	}
+	@Test
+	void realizarPedidoCorrecto() throws IlegalNumberException {
+		comanda = new HashMap<String, String>();
+		comanda.put("nifCliente", "44444444D");
+		comanda.put("idRestaurante", "1");
+		pedidoComandaG = usuarioService.realizarPedido(comanda);
+		assertNotNull(pedidoComandaG);
+		
+	}
 
 	// --------------------------------------------------------------------------------------------------------
 	// SITUACION DEL RIDER ELIGIENDO PEDIDOS A REPARTIR
