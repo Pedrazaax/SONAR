@@ -98,15 +98,15 @@ class TiComoGp4ApplicationTestsSPRINT2 {
 	/**
 	 * REALIZACIÓN DE PEDIDO CORRECTO
 	 */
-	@Test
-	void realizarPedidoCorrecto() throws IlegalNumberException {
-		comanda = new HashMap<String, String>();
-		comanda.put("nifCliente", "151551");
-		comanda.put("idRestaurante", "151551");
-		pedidoComandaG = usuarioService.realizarPedido(comanda);
-		assertNotNull(pedidoComanda);
-		
-	}
+//	@Test
+//	void realizarPedidoCorrecto() throws IlegalNumberException {
+//		comanda = new HashMap<String, String>();
+//		comanda.put("nifCliente", "151551");
+//		comanda.put("idRestaurante", "151551");
+//		pedidoComandaG = usuarioService.realizarPedido(comanda);
+//		assertNotNull(pedidoComanda);
+//		
+//	}
 
 	// --------------------------------------------------------------------------------------------------------
 	// SITUACION DEL RIDER ELIGIENDO PEDIDOS A REPARTIR
