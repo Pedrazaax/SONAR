@@ -13,29 +13,7 @@
 	<name>TIComo_GP4</name>
 	<description>Demo project for Spring Boot</description>
 
-	<!--<properties>
-		<sonar.organization>isogp4</sonar.organization>
-		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-	</properties> -->
-
-
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.maven/sonar-maven-plugin -->
-		<!-- <dependency>
-			<groupId>org.sonarsource.scanner.maven</groupId>
-			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.9.1.2184</version>
-		</dependency> -->
-
-
-		<!-- https://mvnrepository.com/artifact/org.sonarsource.scanner.api/sonar-scanner-api -->
-		<!-- <dependency>
-			<groupId>org.sonarsource.scanner.api</groupId>
-			<artifactId>sonar-scanner-api</artifactId>
-			<version>2.16.2.588</version>
-		</dependency> -->
-
-
 		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
 		<dependency>
 			<groupId>org.jacoco</groupId>

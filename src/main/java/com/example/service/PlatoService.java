@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.exceptions.IlegalNumberException;
 import com.example.exceptions.IncompleteFormException;
-import com.example.model.PedidoComanda;
 import com.example.model.Plato;
 
 import com.example.repository.PlatosRepository;

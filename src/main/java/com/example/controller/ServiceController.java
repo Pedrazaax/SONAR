@@ -73,10 +73,9 @@ public class ServiceController {
 	/*
 	 * Este método es llamado desde la vista por tipo PostMapping , se accede vía
 	 * "/Login" para Loggear todo tipo de usuarios de la aplicación
-	 *	
-	 *Toma como entrada la información de loggeo : Email y Contraseña
+	 * Toma como entrada la información de loggeo : Email y Contraseña
 	 * Controla excepciones y retorna un FORBIDDEN en caso de error.
-	 * */
+	 */
 	@PostMapping("/Login")
 	public TokenSession signIn(@RequestBody Usuario info) {
 		try {

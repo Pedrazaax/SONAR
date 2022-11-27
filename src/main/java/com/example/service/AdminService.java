@@ -143,7 +143,6 @@ public class AdminService {
 	}
 
 	public List<PedidoComanda> consultarPedidosPorEstado(String estado) {
-		// TODO Auto-generated method stub
 		return pedidosRepo.findByestadoPedidoContaining(estado);
 	}
 	

@@ -41,37 +41,38 @@ import com.itextpdf.layout.Document;
  */
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
 public class UsuarioService {
-		/* ========================================================== */
+	/* ========================================================== */
 	// VARIABLES
 	// usuarioRepo: variable solo conocida por esta clase que accede al repositorio
 	// para hacer consultas en la BBDD
 	// Anota Autowired para instanciarse automáticamente al iniciar Spring
 	@Autowired
 	private UsuarioRepository usuarioRepo;
-	//pedidosRepo : repositorio para hacer consultas de los pedidos del usuario
+	// pedidosRepo : repositorio para hacer consultas de los pedidos del usuario
 	@Autowired
 	private PedidosRepository pedidosRepo;
 	// checkSecurity : variable que accede a métodos que comprueban la seguridad del
 	// sistema
 	private SecurityMethods checkSecurity = new SecurityMethods();
-	// restauranteService : variable que permite a un usuario acceder al servicio de restaurantes para realizar un pedido
+	// restauranteService : variable que permite a un usuario acceder al servicio de
+	// restaurantes para realizar un pedido
 	@Autowired
 	private RestauranteService restaurantServ;
 	// facturasRepo : repositorio de facturas para manejar la BBDD
 	@Autowired
 	private FacturasRepository facturasRepo;
 	// riderService : variable que la vamos a usar al valorar riders
-    @Autowired
-    private RiderService riderServ;
-    // valoracionService : variable que la vamos a usar para guardar las
-    // valoraciones en la BBDD
-    @Autowired
-    private ValoracionService valService;
-    //riderRepo : repositorio para pedir a los rider
-    @Autowired
-    private RiderRepository riderRepo;
-    
-    static final String unUs = "No existe para valorar";
+	@Autowired
+	private RiderService riderServ;
+	// valoracionService : variable que la vamos a usar para guardar las
+	// valoraciones en la BBDD
+	@Autowired
+	private ValoracionService valService;
+	// riderRepo : repositorio para pedir a los rider
+	@Autowired
+	private RiderRepository riderRepo;
+
+	static final String unUs = "No existe para valorar";
 
 	/* ========================================================================== */
 	// MÉTODOS
@@ -85,8 +86,7 @@ public class UsuarioService {
 	 * 
 	 */
 	public Usuario saveUseR(Usuario usuario)
-			throws YaEnUsoException, ContraseniaIncorrectaException,
-			IlegalNumberException, InvalidEmailException {
+			throws YaEnUsoException, ContraseniaIncorrectaException, IlegalNumberException, InvalidEmailException {
 
 		Optional<Usuario> possibleUsuario = usuarioRepo.findByEmail(usuario.getEmail());
 
@@ -101,16 +101,17 @@ public class UsuarioService {
 		Persona aux = usuario;
 		checkSecurity.restriccionesContrasenia(aux);
 		checkSecurity.verificarNumero(usuario.getTelefono());
-		if(Boolean.FALSE.equals(checkSecurity.validEmail(usuario.getEmail())))
+		if (Boolean.FALSE.equals(checkSecurity.validEmail(usuario.getEmail())))
 			throw new InvalidEmailException("El email no corresponde con uno válido");
-		
-		if(Boolean.FALSE.equals(checkSecurity.validNif(usuario.getNif())))
-			throw new IlegalNumberException("El NIF introducido no es un NIF válido. Tiene que contener 8 números y un caracter");
+
+		if (Boolean.FALSE.equals(checkSecurity.validNif(usuario.getNif())))
+			throw new IlegalNumberException(
+					"El NIF introducido no es un NIF válido. Tiene que contener 8 números y un caracter");
 
 		checkSecurity.equalPass(usuario.getContrasenia(), usuario.getContraseniaDoble());
 		usuario.setContrasenia(checkSecurity.cifradoContrasenia(aux.getContrasenia()));
-		usuario.setContraseniaDoble(checkSecurity.cifradoContrasenia(usuario.getContraseniaDoble()));	
-		
+		usuario.setContraseniaDoble(checkSecurity.cifradoContrasenia(usuario.getContraseniaDoble()));
+
 		return usuarioRepo.insert(usuario);
 
 	}
@@ -129,8 +130,8 @@ public class UsuarioService {
 	public Optional<Usuario> findById(String nif) {
 		return usuarioRepo.findById(nif);
 	}
-	
-	/*Método para guardar una factura si lo desea*/
+
+	/* Método para guardar una factura si lo desea */
 	public void guardarFactura(Facturas factura) {
 		facturasRepo.insert(factura);
 	}
@@ -138,24 +139,23 @@ public class UsuarioService {
 	/*
 	 * Retorna una consulta de todas las facturas con ese idPedido de la BBDD
 	 */
-	public void consultarFacturasPorIdPedido(String idPedido) throws InvoiceGenException, IncompleteFormException, IOException {
-		
-		Optional<Facturas> facts= facturasRepo.findByidPedido(idPedido);
-		Optional<PedidoComanda> pedido = pedidosRepo.findById(idPedido);
-		
-		if(!pedido.isPresent() || !facts.isPresent()) {
-			throw new InvoiceGenException("Hubo un problema con la factura del pedido");
-		}
-		
-		if(!pedido.get().getId().equals(facts.get().getId())) {
-			throw new InvoiceGenException("Hubo un problema con la factura del pedido");
-		}
-		
-		restaurantServ.restauranteGeneraFactura(pedido.get(),facts.get());
+	public void consultarFacturasPorIdPedido(String idPedido)
+			throws InvoiceGenException, IncompleteFormException, IOException {
 
-		
+		Optional<Facturas> facts = facturasRepo.findByidPedido(idPedido);
+		Optional<PedidoComanda> pedido = pedidosRepo.findById(idPedido);
+
+		if (!pedido.isPresent() || !facts.isPresent()) {
+			throw new InvoiceGenException("Hubo un problema con la factura del pedido");
+		}
+
+		if (!pedido.get().getId().equals(facts.get().getId())) {
+			throw new InvoiceGenException("Hubo un problema con la factura del pedido");
+		}
+
+		restaurantServ.restauranteGeneraFactura(pedido.get(), facts.get());
+
 	}
-	
 
 	/*
 	 * 
@@ -165,154 +165,161 @@ public class UsuarioService {
 	public Optional<Usuario> findByEmail(String email) {
 		return usuarioRepo.findByEmail(email);
 	}
-	
+
 	/*
 	 * 
-	 * Los cambios los cuales hagamos cuando modifiquemos los datos
-	 * del usuario se guardarán en la base de datos
+	 * Los cambios los cuales hagamos cuando modifiquemos los datos del usuario se
+	 * guardarán en la base de datos
 	 * 
 	 */
-	public Usuario updateForm(Usuario usuario) throws IncompleteFormException, IlegalNumberException,
-	ContraseniaIncorrectaException {
-		
-		if (usuario.getNif().equals("") || usuario.getNombre().equals("")
-				|| usuario.getDireccion().equals("") || usuario.getTelefono().equals("")
-				|| usuario.getEmail().equals("") || usuario.getContraseniaDoble().equals("")) 
+	public Usuario updateForm(Usuario usuario)
+			throws IncompleteFormException, IlegalNumberException, ContraseniaIncorrectaException {
+
+		if (usuario.getNif().equals("") || usuario.getNombre().equals("") || usuario.getDireccion().equals("")
+				|| usuario.getTelefono().equals("") || usuario.getEmail().equals("")
+				|| usuario.getContraseniaDoble().equals(""))
 			throw new IncompleteFormException("Introduzca todos los datos");
-		
+
 		Persona aux = usuario;
 		checkSecurity.restriccionesContrasenia(aux);
 		checkSecurity.validEmail(usuario.getEmail());
 		checkSecurity.verificarNumero(usuario.getTelefono());
-		
-		if(Boolean.FALSE.equals(checkSecurity.validNif(usuario.getNif())))
-			throw new IlegalNumberException("El NIF introducido no es un NIF válido. Tiene que contener 8 números y un caracter");
-		
-		if(usuario.getContrasenia().length() != 60) {
-			if (!usuario.getContraseniaDoble().isEmpty()) {
-				checkSecurity.equalPass(usuario.getContrasenia(), usuario.getContraseniaDoble());
-				usuario.setContrasenia(checkSecurity.cifradoContrasenia(usuario.getContrasenia()));
-				usuario.setContraseniaDoble(checkSecurity.cifradoContrasenia(usuario.getContrasenia()));
-			}
+
+		if (Boolean.FALSE.equals(checkSecurity.validNif(usuario.getNif())))
+			throw new IlegalNumberException(
+					"El NIF introducido no es un NIF válido. Tiene que contener 8 números y un caracter");
+
+		if ((usuario.getContrasenia().length() != 60) && (!usuario.getContraseniaDoble().isEmpty())) {
+			checkSecurity.equalPass(usuario.getContrasenia(), usuario.getContraseniaDoble());
+			usuario.setContrasenia(checkSecurity.cifradoContrasenia(usuario.getContrasenia()));
+			usuario.setContraseniaDoble(checkSecurity.cifradoContrasenia(usuario.getContrasenia()));
 		}
-		
-		
-		
+
 		return usuarioRepo.save(usuario);
-			
+
 	}
-	/*Método que borra un usuario por ID*/
+
+	/* Método que borra un usuario por ID */
 	public void deleteById(String nif) {
-		usuarioRepo.deleteById(nif);	
+		usuarioRepo.deleteById(nif);
 	}
-	
-	/*Este método es utilizado por los administradores para bloquear usuarios y riders*/
-	public Usuario lockPerson(Persona usuario) throws PerfilBloqueadoException 
-	{
-		if(usuario.getIntentos()==0) {
+
+	/*
+	 * Este método es utilizado por los administradores para bloquear usuarios y
+	 * riders
+	 */
+	public Usuario lockPerson(Persona usuario) throws PerfilBloqueadoException {
+		if (usuario.getIntentos() == 0) {
 			throw new PerfilBloqueadoException("Usuario ya deshabilitado");
 		}
 		usuario.setIntentos(0);
-		
+
 		Usuario aux = (Usuario) usuario;
-		
+
 		return usuarioRepo.save(aux);
 	}
-	
-	/*Este método es utilizado por los administradores para desbloquear usuarios y riders*/
-	public Usuario unlockPerson(Persona usuario) throws PerfilBloqueadoException 
-	{
-		if(usuario.getIntentos()==5) {
+
+	/*
+	 * Este método es utilizado por los administradores para desbloquear usuarios y
+	 * riders
+	 */
+	public Usuario unlockPerson(Persona usuario) throws PerfilBloqueadoException {
+		if (usuario.getIntentos() == 5) {
 			throw new PerfilBloqueadoException("Usuario ya habilitado");
 		}
 		usuario.setIntentos(5);
-		
+
 		Usuario aux = (Usuario) usuario;
-		
+
 		return usuarioRepo.save(aux);
 	}
 
-	/*Método que actua de llamada a la preparación de un pedido del usuario*/
-	public PedidoComanda realizarPedido(Map<String,String> comanda) throws IlegalNumberException {
-		
+	/* Método que actua de llamada a la preparación de un pedido del usuario */
+	public PedidoComanda realizarPedido(Map<String, String> comanda) throws IlegalNumberException {
+
 		return restaurantServ.prepararPedido(comanda);
-		
+
 	}
 
-	/*Método que llama al restaurante para que le genere la factura*/
-	
+	/* Método que llama al restaurante para que le genere la factura */
+
 	public Map<String, Document> pedirFactura(PedidoComanda comanda) throws IncompleteFormException, IOException {
 		return restaurantServ.pedirFactura(comanda);
 	}
-	/*Método que consulta un pedido por id proporcionado por un usuario*/
+
+	/* Método que consulta un pedido por id proporcionado por un usuario */
 	public Optional<PedidoComanda> consultarPedidoPorId(String idPedido) {
 		return restaurantServ.consultarPedidoPorId(idPedido);
 	}
+
 	/* Método en el que el usuario cambia el estado de un pedido */
-    public PedidoComanda cambiarEstadoPedido(PedidoComanda comanda) throws UnexistentUser, MalEstadoPedidoException {
-    	Optional<PedidoComanda> pedido = pedidosRepo.findById(comanda.getId());
-        Optional<Rider> r= riderServ.findById(comanda.getIdRider());
-        if(!pedido.isPresent())
-            throw new UnexistentUser("No existe el pedido");
-        if(!r.isPresent())
-            throw new MalEstadoPedidoException("No existe el rider para consultar ese pedido.");
+	public PedidoComanda cambiarEstadoPedido(PedidoComanda comanda) throws UnexistentUser, MalEstadoPedidoException {
+		Optional<PedidoComanda> pedido = pedidosRepo.findById(comanda.getId());
+		Optional<Rider> r = riderServ.findById(comanda.getIdRider());
+		if (!pedido.isPresent())
+			throw new UnexistentUser("No existe el pedido");
+		if (!r.isPresent())
+			throw new MalEstadoPedidoException("No existe el rider para consultar ese pedido.");
 
-        r.get().setNumeroPedidos(r.get().getNumeroPedidos()+1);
-        riderRepo.save(r.get());
-        pedido.get().setEstadoPedido("Entregado");
-        return pedidosRepo.save(pedido.get());
-        }
-/*
-     * Método que llama al repositorio de pedidos para encontrar los pedidos pendientes de un cliente
-     * */
-    public List<PedidoComanda> consultarMisPedidosEnReparto(String cliente){
-        List<PedidoComanda> pedidosPendientes = new ArrayList<>();
-        List<PedidoComanda> total=  pedidosRepo.findBynifCliente(cliente);
-        for(int i = 0; i< total.size();i++) {
-            if(total.get(i).getEstadoPedido().equalsIgnoreCase("en reparto")) {
-                pedidosPendientes.add(total.get(i));
-            }
-        }
-        return pedidosPendientes;
-    }
-    /*
-     * Método que llama al repositorio de pedidos para encontrar los pedidos de un cliente
-     * */
-    public List<PedidoComanda> consultarMisPedidos(String cliente){
-        return pedidosRepo.findBynifCliente(cliente);
-
-    }
-    /*Método que actualiza los intentos de un usuario. Se puede usar a mano*/
-	public void updateUserIntentos(String email, int intentos) throws UnexistentUser {
-		
-		Optional<Usuario> user = usuarioRepo.findByEmail(email);
-		
-		if(!user.isPresent())
-			throw new UnexistentUser("Imposible encontrar al usuario");
-		
-		user.get().setIntentos(intentos);
-		
-		usuarioRepo.save(user.get());
-		
-		
+		r.get().setNumeroPedidos(r.get().getNumeroPedidos() + 1);
+		riderRepo.save(r.get());
+		pedido.get().setEstadoPedido("Entregado");
+		return pedidosRepo.save(pedido.get());
 	}
-	/*Método que consulta el nombre de un plato*/
+
+	/*
+	 * Método que llama al repositorio de pedidos para encontrar los pedidos
+	 * pendientes de un cliente
+	 */
+	public List<PedidoComanda> consultarMisPedidosEnReparto(String cliente) {
+		List<PedidoComanda> pedidosPendientes = new ArrayList<>();
+		List<PedidoComanda> total = pedidosRepo.findBynifCliente(cliente);
+		for (int i = 0; i < total.size(); i++) {
+			if (total.get(i).getEstadoPedido().equalsIgnoreCase("en reparto")) {
+				pedidosPendientes.add(total.get(i));
+			}
+		}
+		return pedidosPendientes;
+	}
+
+	/*
+	 * Método que llama al repositorio de pedidos para encontrar los pedidos de un
+	 * cliente
+	 */
+	public List<PedidoComanda> consultarMisPedidos(String cliente) {
+		return pedidosRepo.findBynifCliente(cliente);
+
+	}
+
+	/* Método que actualiza los intentos de un usuario. Se puede usar a mano */
+	public void updateUserIntentos(String email, int intentos) throws UnexistentUser {
+
+		Optional<Usuario> user = usuarioRepo.findByEmail(email);
+
+		if (!user.isPresent())
+			throw new UnexistentUser("Imposible encontrar al usuario");
+
+		user.get().setIntentos(intentos);
+
+		usuarioRepo.save(user.get());
+
+	}
+
+	/* Método que consulta el nombre de un plato */
 	public Plato consultarIdPorNombrePlato(String nombre) throws IlegalNumberException {
-		
+
 		return restaurantServ.consultarIdPorNombrePlato(nombre);
 	}
-	
-
 
 	/*
 	 * Método que guarda la valoracion del rider comprobando si es su primera
 	 */
 	public Valoracion valorarRider(Valoracion valoracion) throws UnexistentUser {
 		Optional<Rider> rider = riderServ.findById(valoracion.getIdValorado());
-		
-		if(!rider.isPresent())
+
+		if (!rider.isPresent())
 			throw new UnexistentUser(unUs);
-		
+
 		if (riderServ.isPrimeraValoracion(valoracion.getIdValorado())) {
 			rider.get().setValoracionMedia(valoracion.getNota());
 		} else {
@@ -326,10 +333,10 @@ public class UsuarioService {
 	 */
 	public Valoracion valorarRestaurante(Valoracion valoracion) throws UnexistentUser {
 		Optional<Restaurante> restaurante = restaurantServ.findByIdRestaurante(valoracion.getIdValorado());
-		
-		if(!restaurante.isPresent())
+
+		if (!restaurante.isPresent())
 			throw new UnexistentUser(unUs);
-		
+
 		if (restaurantServ.isPrimeraValoracion(valoracion.getIdValorado())) {
 			restaurante.get().setValoracionMedia(valoracion.getNota());
 		} else {
@@ -337,17 +344,16 @@ public class UsuarioService {
 		}
 		return valService.saveValoracionRestaurante(valoracion);
 	}
-	
-	/*Consulta una factura por id*/
+
+	/* Consulta una factura por id */
 	public Optional<Facturas> findByidPedido(String idPedido) throws UnexistentUser {
-		
+
 		Optional<Facturas> factura = facturasRepo.findById(idPedido);
-		
-		if(!factura.isPresent())
+
+		if (!factura.isPresent())
 			throw new UnexistentUser("Imposible cargar la factura");
 
 		return factura;
 	}
-	
 
 }

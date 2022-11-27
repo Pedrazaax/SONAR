@@ -34,7 +34,7 @@ import com.example.service.RiderService;
 import com.example.service.UsuarioService;
 
 @SpringBootTest
-class TiComoGp4ApplicationTestsSPRINT1 {
+class TestsSPRINT1 {
 
 	@Autowired
 	private RegisterService regService;
