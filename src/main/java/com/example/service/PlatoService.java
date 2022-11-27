@@ -46,8 +46,9 @@ public class PlatoService {
 	
 	/**
 	 * Guardamos un plato el cual va a pertenecer a un restaurante mediante su id
+	 * @return 
 	 */
-	public void save(Plato plato) throws IncompleteFormException{
+	public Plato save(Plato plato) throws IncompleteFormException{
 		if(plato.getNombre().equals("") || plato.getDescripcion().equals("")
 			|| plato.getIdRestaurante().equals("") || plato.getPrecio()<=0)
 				throw new IncompleteFormException("Faltan datos");
@@ -55,7 +56,7 @@ public class PlatoService {
 		if(plato.getId()!=null) {
 			plato.setId(null);
 		}
-		platoRepo.insert(plato);
+		return platoRepo.insert(plato);
 	}
 	
 	/**

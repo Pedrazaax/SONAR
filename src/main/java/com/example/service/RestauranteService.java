@@ -75,7 +75,7 @@ public class RestauranteService {
 	 * 
 	 */
 
-	public void saveRestaurante(Restaurante restaurante) throws IncompleteFormException {
+	public Restaurante saveRestaurante(Restaurante restaurante) throws IncompleteFormException {
 		if (restaurante.getCif().equals("") || restaurante.getNombre().equals("")
 				|| restaurante.getEmailContacto().equals("") || restaurante.getCategoria().equals("")
 				|| restaurante.getDireccion().equals(""))
@@ -85,7 +85,7 @@ public class RestauranteService {
 		if (restaurante.getId() != null) {
 			restaurante.setId(null);
 		}
-		restauranteRepo.insert(restaurante);
+		return restauranteRepo.insert(restaurante);
 
 	}
 
@@ -114,8 +114,9 @@ public class RestauranteService {
 	/**
 	 * Método en el cual se van a realizar los cambios en la base cuando
 	 * modifiquemos los datos de cualquier restaurante
+	 * @return 
 	 */
-	public void updateRestaurante(Restaurante restaurante) throws IncompleteFormException {
+	public Restaurante updateRestaurante(Restaurante restaurante) throws IncompleteFormException {
 
 		if (restaurante.getCif().equals("") || restaurante.getNombre().equals("")
 				|| restaurante.getDireccion().equals("") || restaurante.getEmailContacto().equals("")
@@ -124,7 +125,7 @@ public class RestauranteService {
 
 		checkSecurity.validEmail(restaurante.getEmailContacto());
 
-		restauranteRepo.save(restaurante);
+		return restauranteRepo.save(restaurante);
 
 	}
 

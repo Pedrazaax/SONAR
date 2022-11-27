@@ -7,29 +7,30 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+
 @JsonAutoDetect(fieldVisibility = Visibility.ANY)
-@Document(value= "Restaurantes")
+@Document(value = "Restaurantes")
 public class Restaurante {
 	@Id
 	private String id;
-	
-	private String cif;	
+
+	private String cif;
 	private String nombre;
 	private String direccion;
 	private String emailContacto;
 	private String categoria;
 	private URL imagen;
 	private double valoracionMedia;
-	
 
-	public Restaurante(String cif, String nombre, String direccion, String emailContacto, String categoria, URL imagen ) {
-		
+	public Restaurante(String cif, String nombre, String direccion, String emailContacto, String categoria,
+			URL imagen) {
+
 		this.cif = cif;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.emailContacto = emailContacto;
 		this.categoria = categoria;
-		this.imagen=imagen;
+		this.imagen = imagen;
 		this.valoracionMedia = 0.0;
 	}
 
@@ -88,7 +89,6 @@ public class Restaurante {
 	public void setImagen(URL imagen) {
 		this.imagen = imagen;
 	}
-	
 
 	public double getValoracionMedia() {
 		return valoracionMedia;
@@ -97,13 +97,12 @@ public class Restaurante {
 	public void setValoracionMedia(double valoracionMedia) {
 		this.valoracionMedia = valoracionMedia;
 	}
-	/*Método toString de la clase*/
+
+	/* Método toString de la clase */
 	@Override
 	public String toString() {
-		return "Restaurante [id=" + id + ", cif=" + cif + ", nombre=" + nombre + ", direccion=" + direccion + ", emailContacto="
-				+ emailContacto + ", categoria=" + categoria + ", imagen=" + imagen + "]";
+		return "Restaurante [id=" + id + ", cif=" + cif + ", nombre=" + nombre + ", direccion=" + direccion
+				+ ", emailContacto=" + emailContacto + ", categoria=" + categoria + ", imagen=" + imagen + "]";
 	}
-	
-	
-	
+
 }
