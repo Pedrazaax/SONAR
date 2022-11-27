@@ -172,7 +172,7 @@ public class UsuarioService {
 	 * del usuario se guardarán en la base de datos
 	 * 
 	 */
-	public void updateForm(Usuario usuario) throws IncompleteFormException, IlegalNumberException,
+	public Usuario updateForm(Usuario usuario) throws IncompleteFormException, IlegalNumberException,
 	ContraseniaIncorrectaException {
 		
 		if (usuario.getNif().equals("") || usuario.getNombre().equals("")
@@ -198,7 +198,7 @@ public class UsuarioService {
 		
 		
 		
-		usuarioRepo.save(usuario);
+		return usuarioRepo.save(usuario);
 			
 	}
 	/*Método que borra un usuario por ID*/
@@ -207,7 +207,7 @@ public class UsuarioService {
 	}
 	
 	/*Este método es utilizado por los administradores para bloquear usuarios y riders*/
-	public void lockPerson(Persona usuario) throws PerfilBloqueadoException 
+	public Usuario lockPerson(Persona usuario) throws PerfilBloqueadoException 
 	{
 		if(usuario.getIntentos()==0) {
 			throw new PerfilBloqueadoException("Usuario ya deshabilitado");
@@ -216,11 +216,11 @@ public class UsuarioService {
 		
 		Usuario aux = (Usuario) usuario;
 		
-		usuarioRepo.save(aux);
+		return usuarioRepo.save(aux);
 	}
 	
 	/*Este método es utilizado por los administradores para desbloquear usuarios y riders*/
-	public void unlockPerson(Persona usuario) throws PerfilBloqueadoException 
+	public Usuario unlockPerson(Persona usuario) throws PerfilBloqueadoException 
 	{
 		if(usuario.getIntentos()==5) {
 			throw new PerfilBloqueadoException("Usuario ya habilitado");
@@ -229,7 +229,7 @@ public class UsuarioService {
 		
 		Usuario aux = (Usuario) usuario;
 		
-		usuarioRepo.save(aux);
+		return usuarioRepo.save(aux);
 	}
 
 	/*Método que actua de llamada a la preparación de un pedido del usuario*/

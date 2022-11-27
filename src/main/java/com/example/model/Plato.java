@@ -36,6 +36,14 @@ public class Plato {
 		this.aptoVeganos = aptoVeganos;
 		this.idRestaurante = idRestaurante;
 	}
+	public Plato(String nombre, String descripcion, double precio, boolean aptoVeganos, String idRestaurante) {
+		this.nombre = nombre;
+	
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.aptoVeganos = aptoVeganos;
+		this.idRestaurante = idRestaurante;
+	}
 	public String getIdRestaurante() {
 		return idRestaurante;
 	}
