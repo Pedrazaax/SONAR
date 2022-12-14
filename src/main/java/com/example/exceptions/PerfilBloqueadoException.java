@@ -7,7 +7,6 @@ public class PerfilBloqueadoException extends Exception {
 	public PerfilBloqueadoException(String err) 
 	{
 		super(err);
-
 	}
 
 }

@@ -34,7 +34,6 @@ public class Facturas {
 		this.idPedido = idPedido;
 		this.fechaFactura = fechaFactura;
 		this.nifCliente = nifCliente;
-		
 	}
 
 	/*Getters y setters de la clase*/

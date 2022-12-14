@@ -5,6 +5,7 @@ public class IncompleteFormException extends Exception{
 	
 	public IncompleteFormException(String err) {
 		super(err);
+		
 	}
 
 }

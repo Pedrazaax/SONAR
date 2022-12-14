@@ -6,6 +6,5 @@ public class NonAdminValidationException extends Exception {
 	public NonAdminValidationException(String err) {
 		
 		super(err);
-		
 	}
 }

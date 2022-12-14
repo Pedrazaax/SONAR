@@ -7,7 +7,6 @@ public class MalEstadoPedidoException extends Exception {
 	public MalEstadoPedidoException(String err) 
 	{
 		super(err);
-
 	}
 
 }
